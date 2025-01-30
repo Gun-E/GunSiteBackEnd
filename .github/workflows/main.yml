@@ -17,10 +17,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin' 
-
-      - name: Build with Maven
-        run: mvn clean install
-
+          
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.6
         with:
@@ -31,5 +28,5 @@ jobs:
           script: |
             cd GunSiteBackEnd/
             git pull origin master
-            mvn clean install
+            mvn clean package
             sudo systemctl restart gunsite-backend.service
