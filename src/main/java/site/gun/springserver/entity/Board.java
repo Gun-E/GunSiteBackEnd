@@ -19,9 +19,13 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "title")
     private String title;
+    @Column(name = "content")
     private String content;
+    @Column(name = "category")
     private String category;
+    @Column(name = "date")
     private LocalDateTime date;
 
     @ManyToOne
