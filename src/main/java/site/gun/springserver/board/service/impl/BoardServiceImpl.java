@@ -1,7 +1,10 @@
 package site.gun.springserver.board.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import site.gun.springserver.board.dto.BoardDto;
 import site.gun.springserver.board.dto.CreateBoardDto;
 import site.gun.springserver.board.repository.BoardRepository;
 import site.gun.springserver.board.service.BoardService;
@@ -10,6 +13,8 @@ import site.gun.springserver.entity.User;
 import site.gun.springserver.user.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -21,6 +26,7 @@ public class BoardServiceImpl implements BoardService {
     public void createBoard(CreateBoardDto boardDto) {
         String title = boardDto.title();
         String content = boardDto.content();
+        String category = boardDto.category();
         LocalDateTime date = LocalDateTime.now();
         Long userId = boardDto.userId();
 
@@ -30,9 +36,21 @@ public class BoardServiceImpl implements BoardService {
         Board board = Board.builder()
                 .title(title)
                 .content(content)
+                .category(category)
                 .date(date)
                 .user(user)
                 .build();
         boardRepository.save(board);
+    }
+
+    @Override
+    public List<BoardDto> getBoards(String category, int limit) {
+        Pageable pageable = PageRequest.of(0, limit);
+        return boardRepository.findTopByCategoryOrderByDateDesc(category, pageable);
+    }
+
+    @Override
+    public List<BoardDto> getBoardsList(String category, PageRequest pageRequest) {
+        return boardRepository.findTopByCategoryOrderByDateDesc(category, pageRequest);
     }
 }
