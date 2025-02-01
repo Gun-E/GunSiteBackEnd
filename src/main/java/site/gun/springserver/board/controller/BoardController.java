@@ -2,14 +2,11 @@ package site.gun.springserver.board.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import site.gun.springserver.board.dto.BoardDto;
-import site.gun.springserver.board.dto.BoardListDto;
 import site.gun.springserver.board.dto.CreateBoardDto;
 import site.gun.springserver.board.service.BoardService;
-import site.gun.springserver.entity.Board;
 
 import java.util.List;
 
@@ -21,7 +18,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @GetMapping("/boards")
+    @GetMapping
     public List<BoardDto> getBoards(
             @RequestParam String category,
             @RequestParam(defaultValue = "5") int limit
@@ -29,7 +26,7 @@ public class BoardController {
         return boardService.getBoards(category, limit);
     }
 
-    @GetMapping("/boards/list")
+    @GetMapping("/list")
     public List<BoardDto> getBoardsList(
             @RequestParam String category,
             @RequestParam(defaultValue = "0") int page,
