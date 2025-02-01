@@ -3,12 +3,15 @@ package site.gun.springserver.board.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import site.gun.springserver.board.dto.BoardDto;
 import site.gun.springserver.board.dto.CreateBoardDto;
 import site.gun.springserver.board.service.BoardService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,14 +30,23 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public List<BoardDto> getBoardsList(
+    public ResponseEntity<Map<String, Object>> getBoardsList(
             @RequestParam String category,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
         PageRequest pageRequest = PageRequest.of(page, size);
 
-        return boardService.getBoardsList(category, pageRequest);
+        List<BoardDto> boardPage = boardService.getBoardsList(category, pageRequest);
+
+        int totalBoards = boardService.getTotalBoardsCount(category);
+        int totalPages = (int) Math.ceil((double) totalBoards / size);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("boards", boardPage);
+        response.put("totalPages", totalPages);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping

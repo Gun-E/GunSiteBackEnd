@@ -53,4 +53,9 @@ public class BoardServiceImpl implements BoardService {
     public List<BoardDto> getBoardsList(String category, PageRequest pageRequest) {
         return boardRepository.findTopByCategoryOrderByDateDesc(category, pageRequest);
     }
+
+    @Override
+    public int getTotalBoardsCount(String category) {
+        return boardRepository.countByCategory(category);  // 카테고리에 해당하는 전체 게시물 수 반환
+    }
 }

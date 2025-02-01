@@ -16,4 +16,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
             "WHERE b.category = :category " +
             "ORDER BY b.date DESC")
     List<BoardDto> findTopByCategoryOrderByDateDesc(String category, Pageable pageable);
+
+    int countByCategory(String category);
 }
