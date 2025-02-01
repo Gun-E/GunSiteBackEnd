@@ -43,6 +43,6 @@ public class User {
     @Column(name = "modified_date")
     private LocalDateTime modifiedDate;
 
-    @OneToMany(mappedBy = "user_id")
+    @OneToMany(mappedBy = "user")
     private List<Board> boards;
 }
