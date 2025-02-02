@@ -58,4 +58,10 @@ public class BoardServiceImpl implements BoardService {
     public int getTotalBoardsCount(String category) {
         return boardRepository.countByCategory(category);  // 카테고리에 해당하는 전체 게시물 수 반환
     }
+
+    @Override
+    public BoardDto getBoardById(Long boardId) {
+        return boardRepository.findBoardById(boardId)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다. ID: " + boardId));
+    }
 }

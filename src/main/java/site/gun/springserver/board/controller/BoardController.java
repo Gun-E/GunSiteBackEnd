@@ -48,6 +48,11 @@ public class BoardController {
 
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/{boardId}")
+    public ResponseEntity<BoardDto> getBoard(@PathVariable Long boardId) {
+        BoardDto boardDto = boardService.getBoardById(boardId);
+        return ResponseEntity.ok(boardDto);
+    }
 
     @PostMapping
     public void createBoard(@RequestBody CreateBoardDto board) {

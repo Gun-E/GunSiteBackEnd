@@ -13,4 +13,6 @@ public interface BoardService {
     List<BoardDto> getBoardsList(String category, PageRequest pageRequest);
 
     int getTotalBoardsCount(String category);
+
+    BoardDto getBoardById(Long boardId);
 }
