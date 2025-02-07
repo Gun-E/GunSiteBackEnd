@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
-    @Query("SELECT new site.gun.springserver.board.dto.BoardDto(b.id, b.title, b.content, u.name, b.date, b.category) " +
+    @Query("SELECT new site.gun.springserver.board.dto.BoardDto(b.id, b.title, b.content, u.name, b.date, b.category, u.userId) " +
             "FROM Board b JOIN b.user u " +
             "WHERE b.category = :category " +
             "ORDER BY b.date DESC")
@@ -22,7 +22,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     int countByCategory(String category);
 
     @Query("SELECT new site.gun.springserver.board.dto.BoardDto( " +
-            "b.id, b.title, b.content, u.name, b.date, b.category) " +
+            "b.id, b.title, b.content, u.name, b.date, b.category, u.userId) " +
             "FROM Board b JOIN b.user u WHERE b.id = :boardId")
     Optional<BoardDto> findBoardById(@Param("boardId") Long boardId);
 }
