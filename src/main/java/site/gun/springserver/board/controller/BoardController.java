@@ -59,5 +59,14 @@ public class BoardController {
         log.info("RegisterRequestDto: {}", board);
         boardService.createBoard(board);
     }
+    @PostMapping("{boardId}")
+    public void editBoard(@RequestBody BoardDto boardDto , @PathVariable Long boardId) {
+        log.info("EditBoardDto: {}", boardDto);
+        boardService.editBoard(boardDto, boardId);
+    }
 
+    @DeleteMapping("{boardId}")
+    public void deleteBoard(@PathVariable Long boardId) {
+        boardService.deleteBoard(boardId);
+    }
 }

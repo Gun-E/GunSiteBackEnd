@@ -55,12 +55,33 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public int getTotalBoardsCount(String category) {
-        return boardRepository.countByCategory(category);  // 카테고리에 해당하는 전체 게시물 수 반환
+        return boardRepository.countByCategory(category);
     }
 
     @Override
     public BoardDto getBoardById(Long boardId) {
         return boardRepository.findBoardById(boardId)
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다. ID: " + boardId));
+    }
+
+    @Override
+    public void deleteBoard(Long boardId) {
+        boardRepository.deleteById(boardId);
+    }
+
+    @Override
+    public void editBoard(BoardDto boardDto, Long boardId) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다. ID: " + boardId));
+        Board.builder()
+                .id(board.getId())
+                .title(boardDto.title())
+                .content(boardDto.content())
+                .category(boardDto.category())
+                .date(LocalDateTime.now())
+                .user(board.getUser())
+                .build();
+
+        boardRepository.save(board);
     }
 }

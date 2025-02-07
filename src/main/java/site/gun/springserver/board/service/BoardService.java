@@ -15,4 +15,8 @@ public interface BoardService {
     int getTotalBoardsCount(String category);
 
     BoardDto getBoardById(Long boardId);
+
+    void deleteBoard(Long boardId);
+
+    void editBoard(BoardDto boardDto, Long boardId);
 }
