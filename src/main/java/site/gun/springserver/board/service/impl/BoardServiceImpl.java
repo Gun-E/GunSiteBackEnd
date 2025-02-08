@@ -78,7 +78,7 @@ public class BoardServiceImpl implements BoardService {
                 .title(boardDto.title())
                 .content(boardDto.content())
                 .category(boardDto.category())
-                .date(LocalDateTime.now())
+                .date(board.getDate())
                 .user(board.getUser())
                 .build();
 
