@@ -73,7 +73,7 @@ public class BoardServiceImpl implements BoardService {
     public void editBoard(BoardDto boardDto, Long boardId) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다. ID: " + boardId));
-        Board.builder()
+        Board editBoard = Board.builder()
                 .id(board.getId())
                 .title(boardDto.title())
                 .content(boardDto.content())
@@ -82,6 +82,6 @@ public class BoardServiceImpl implements BoardService {
                 .user(board.getUser())
                 .build();
 
-        boardRepository.save(board);
+        boardRepository.save(editBoard);
     }
 }
