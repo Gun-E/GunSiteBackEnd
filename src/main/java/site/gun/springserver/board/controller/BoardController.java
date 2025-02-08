@@ -59,7 +59,7 @@ public class BoardController {
         log.info("RegisterRequestDto: {}", board);
         boardService.createBoard(board);
     }
-    @PostMapping("/{boardId}")
+    @PutMapping("/{boardId}")
     public void editBoard(@RequestBody BoardDto boardDto , @PathVariable Long boardId) {
         log.info("EditBoardDto: {}", boardDto);
         boardService.editBoard(boardDto, boardId);
